@@ -1,4 +1,4 @@
-package ovh.warczek.sklep_internetowy;
+package ovh.warczek.sklepinternetowy;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

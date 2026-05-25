@@ -1,10 +1,12 @@
-package ovh.warczek.sklep_internetowy.controller;
+package ovh.warczek.sklepinternetowy.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import ovh.warczek.sklep_internetowy.model.Item;
+import ovh.warczek.sklepinternetowy.model.Item;
+import ovh.warczek.sklepinternetowy.repository.ItemRepository;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -13,17 +15,18 @@ import java.util.List;
 @Controller
 public class Home {
 
-    static List<Item> items = new ArrayList<Item>();
-    static {
-        items.add(new Item("Laptop", new BigDecimal("300.00"), "https://picsum.photos/200"));
-        items.add(new Item("Komputer", new BigDecimal("1000.00"), "https://picsum.photos/200"));
-        items.add(new Item("Tablet", new BigDecimal("100.00"), "https://picsum.photos/200"));
+
+    private final ItemRepository repo;
+
+    @Autowired
+    public Home(ItemRepository repo) {
+        this.repo = repo;
     }
 
     @GetMapping("/")
     public String home(Model model)
     {
-        model.addAttribute("items", items);;
+        model.addAttribute("items", repo.findAll());
         return "home.html";
     }
 
