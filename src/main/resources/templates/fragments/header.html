@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -11,8 +11,8 @@
     <a href="" class="cart-ico">
         <div>
             <span>Koszyk</span>
-            <span th:if="${session.cart != null}" th:text="${session.cart.size()}">(0)</span>
-            <span th:if="${session.cart == null}">0</span>
+            <span th:text="${@cart.getCount()}">(0)</span>
+            <span th:text="${@cart.getSum()}">0</span>
             <span>zł</span>
         </div>
     </a>

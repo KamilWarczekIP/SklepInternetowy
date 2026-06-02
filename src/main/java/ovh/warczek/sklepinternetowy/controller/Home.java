@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
+import ovh.warczek.sklepinternetowy.Cart;
 import ovh.warczek.sklepinternetowy.model.Item;
 import ovh.warczek.sklepinternetowy.repository.ItemRepository;
 
@@ -15,12 +16,13 @@ import java.util.*;
 
 @Controller
 public class Home {
-
+    private final Cart cart;
 
     private final ItemRepository repo;
 
     @Autowired
-    public Home(ItemRepository repo) {
+    public Home(Cart cart, ItemRepository repo) {
+        this.cart = cart;
         this.repo = repo;
     }
 
@@ -41,24 +43,14 @@ public class Home {
     }
 
     @GetMapping("/add/{itemId}")
-    public String addItemToCart(@PathVariable("itemId") long id, Model model, HttpSession session)
+    public String addItemToCart(@PathVariable("itemId") long id, Model model)
     {
-        @SuppressWarnings("unchecked")
-        List<Item> cart = (List<Item>)session.getAttribute("cart");
-        if(cart == null)
+        Optional<Item> oItem = repo.findById(id);
+        if(oItem.isPresent())
         {
-            cart = new ArrayList<Item>();
+            cart.addItem(oItem.get());
         }
-        Optional<Item> itemToAdd = repo.findById(id);
-        if(itemToAdd.isPresent())
-        {
-            Item item = itemToAdd.get();
-            cart.add(item);
-            session.setAttribute("cart", cart);
-        }
-
-        model.addAttribute("items", repo.findAll());
-        return "home.html";
+        return "redirect:/";
     }
 
     @GetMapping("/cartView")
