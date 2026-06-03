@@ -53,6 +53,28 @@ public class Home {
         return "redirect:/";
     }
 
+    @GetMapping("/remove/{itemId}")
+    public String removeItemFromCart(@PathVariable("itemId") long id, Model model)
+    {
+        Optional<Item> oItem = repo.findById(id);
+        if(oItem.isPresent())
+        {
+            cart.removeItem(oItem.get());
+        }
+        return "redirect:/";
+    }
+
+    @GetMapping("/removeAll/{itemId}")
+    public String removeAllItemsFromCart(@PathVariable("itemId") long id, Model model)
+    {
+        Optional<Item> oItem = repo.findById(id);
+        if(oItem.isPresent())
+        {
+            cart.removeAllOfItem(oItem.get());
+        }
+        return "redirect:/";
+    }
+
     @GetMapping("/cartView")
     public String cart()
     {

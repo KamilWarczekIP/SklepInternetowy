@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
 <header th:fragment="ShopHeader">
-    <span class="title">MyShop</span>
+    <a href="/">
+        <span class="title">MyShop</span>
+    </a>
 
-    <a href="" class="cart-ico">
+    <a th:href="@{/order/cart}" class="cart-ico">
         <div>
             <span>Koszyk</span>
             <span th:text="${@cart.getCount()}">(0)</span>

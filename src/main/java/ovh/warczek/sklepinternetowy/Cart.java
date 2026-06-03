@@ -30,19 +30,27 @@ public class Cart {
             i.decreaseCounter();
             if(i.hasZeroItems())
                 items.remove(i);
-        }, () -> {items.add(new CartItem(item));});
+        }, () -> {});
+    }
+
+    public void removeAllOfItem(Item item) {
+        getCartItemByItem(item).ifPresentOrElse( i -> {
+            items.remove(i);
+        }, () -> {});
     }
     public BigDecimal getSum() {
-        return items.stream().map(CartItem::getPrice).reduce(BigDecimal.valueOf(0.0), BigDecimal::add);
+        return items.stream()
+                .map(CartItem::getPrice)
+                .reduce(BigDecimal.valueOf(0.0), BigDecimal::add);
     }
     public int getCount() {
         return items.stream().map(CartItem::getCount).reduce(0, Integer::sum);
     }
+    public List<CartItem> getItems()
+    {
+        return items;
+    }
     Cart() {
         items = new ArrayList<>();
-//        for (var i : repo.findAll())
-//        {
-//            addItem(i);
-//        }
     }
 }
