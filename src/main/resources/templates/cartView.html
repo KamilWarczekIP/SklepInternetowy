@@ -28,13 +28,13 @@
                     </td>
                     <td th:text="${cartItem.item.getName()}"></td>
                     <td style="display: flex; padding-top: 10px">
-                        <a class="mbtn" th:href="@{'/remove/' + ${cartItem.getItem().id}}">-</a>
+                        <a class="mbtn" th:href="@{'/order/remove/' + ${cartItem.getItem().id}}">-</a>
                         <p  th:text="${cartItem.getCount()}"></p>
-                        <a class="mbtn" th:href="@{'/add/' + ${cartItem.getItem().id}}">+</a>
+                        <a class="mbtn" th:href="@{'/order/add/' + ${cartItem.getItem().id}}">+</a>
                     </td>
                     <td th:text="${cartItem.getPrice()}"></td>
                     <td>
-                        <a class="mbtn" th:href="@{'/removeAll/' + ${cartItem.getItem().id}}">X</a>
+                        <a class="mbtn" th:href="@{'/order/removeAll/' + ${cartItem.getItem().id}}">X</a>
                     </td>
                 </tr>
             </table>

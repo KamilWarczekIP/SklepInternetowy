@@ -16,13 +16,10 @@ import java.util.*;
 
 @Controller
 public class Home {
-    private final Cart cart;
-
     private final ItemRepository repo;
 
     @Autowired
-    public Home(Cart cart, ItemRepository repo) {
-        this.cart = cart;
+    public Home(ItemRepository repo) {
         this.repo = repo;
     }
 
@@ -33,47 +30,6 @@ public class Home {
         return "home.html";
     }
 
-    // Dodałem od razu w ramach testów dostęp do plików pozostałych plików .html
-
-    @GetMapping("/item")
-    @ResponseBody
-    public Item item()
-    {
-        return new Item("Laptop", new BigDecimal("100.00"), "https://picsum.photos/200");
-    }
-
-    @GetMapping("/add/{itemId}")
-    public String addItemToCart(@PathVariable("itemId") long id, Model model)
-    {
-        Optional<Item> oItem = repo.findById(id);
-        if(oItem.isPresent())
-        {
-            cart.addItem(oItem.get());
-        }
-        return "redirect:/";
-    }
-
-    @GetMapping("/remove/{itemId}")
-    public String removeItemFromCart(@PathVariable("itemId") long id, Model model)
-    {
-        Optional<Item> oItem = repo.findById(id);
-        if(oItem.isPresent())
-        {
-            cart.removeItem(oItem.get());
-        }
-        return "redirect:/";
-    }
-
-    @GetMapping("/removeAll/{itemId}")
-    public String removeAllItemsFromCart(@PathVariable("itemId") long id, Model model)
-    {
-        Optional<Item> oItem = repo.findById(id);
-        if(oItem.isPresent())
-        {
-            cart.removeAllOfItem(oItem.get());
-        }
-        return "redirect:/";
-    }
 
     @GetMapping("/cartView")
     public String cart()
