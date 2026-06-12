@@ -9,6 +9,7 @@ import ovh.warczek.sklepinternetowy.Cart;
 import ovh.warczek.sklepinternetowy.model.Item;
 import ovh.warczek.sklepinternetowy.repository.ItemRepository;
 import ovh.warczek.sklepinternetowy.service.CartService;
+import ovh.warczek.sklepinternetowy.service.ItemOperation;
 
 import java.util.Optional;
 
@@ -30,21 +31,21 @@ public class Order {
     @GetMapping("/add/{itemId}")
     public String addItemToCart(@PathVariable("itemId") long id)
     {
-    cartService.addItemToCart(id);
+        cartService.itemOperation(ItemOperation.INCREASE, id);
         return "cartView";
     }
 
     @GetMapping("/remove/{itemId}")
     public String removeItemFromCart(@PathVariable("itemId") long id)
     {
-        cartService.removeItemFromCart(id);
+        cartService.itemOperation(ItemOperation.DECREASE, id);
         return "cartView";
     }
 
     @GetMapping("/removeAll/{itemId}")
     public String removeAllItemsFromCart(@PathVariable("itemId") long id)
     {
-        cartService.removeAllItemsFromCart(id);
+        cartService.itemOperation(ItemOperation.REMOVE, id);
         return "cartView";
     }
 }

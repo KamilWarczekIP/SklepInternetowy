@@ -22,21 +22,35 @@ public class CartService {
         this.repo = repo;
     }
 
-    public void addItemToCart(long id)
+    private void addItemToCart(long id)
     {
         Optional<Item> oItem = repo.findById(id);
         oItem.ifPresent(cart::addItem);
     }
 
-    public void removeItemFromCart(long id)
+    private void removeItemFromCart(long id)
     {
         Optional<Item> oItem = repo.findById(id);
         oItem.ifPresent(cart::removeItem);
     }
 
-    public void removeAllItemsFromCart(long id)
+    private void removeAllItemsFromCart(long id)
     {
         Optional<Item> oItem = repo.findById(id);
         oItem.ifPresent(cart::removeAllOfItem);
+    }
+
+    public void itemOperation(ItemOperation operation, long id) {
+        switch (operation) {
+            case INCREASE -> {
+                addItemToCart(id);
+            }
+            case DECREASE -> {
+                removeItemFromCart(id);
+            }
+            case REMOVE -> {
+                removeAllItemsFromCart(id);
+            }
+        }
     }
 }
